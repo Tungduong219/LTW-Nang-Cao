@@ -1,0 +1,61 @@
+## ==========================================
+## .gitignore chuẩn cho .NET & Visual Studio
+## Môn: Lập trình Web Nâng cao (WebNC)
+## ==========================================
+
+# Build results and binary caches
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio & VS Code temporary / cache files
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+# JetBrains Rider & Resharper
+_ReSharper*/
+*.resharper
+*.DotSettings.user
+
+# User-specific & local secret files
+appsettings.*.local.json
+appsettings.Secrets.json
+*.local.json
+
+# Packages & NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+project.lock.json
+project.assets.json
+
+# Compressed files & temporary archives (như file zip backup bài tập)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Windows OS thumbnails & caches
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Node / Frontend temporary files (nếu có dùng npm/yarn trong project Web)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+build/
