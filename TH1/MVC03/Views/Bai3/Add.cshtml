@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Tính tổng hai số";
+}
+
+<div class="container mt-4">
+    <h2>Tính tổng hai số (Action Add)</h2>
+    <hr />
+
+    <form method="post" asp-action="Add">
+        <div class="mb-3">
+            <label class="form-label">Nhập số A:</label>
+            <input type="number" name="a" class="form-control" value="@ViewBag.A" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nhập số B:</label>
+            <input type="number" name="b" class="form-control" value="@ViewBag.B" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Tính Tổng</button>
+    </form>
+
+    @if (ViewBag.Result != null)
+    {
+        <div class="alert alert-success mt-4">
+            <h4>Kết quả: @ViewBag.A + @ViewBag.B = <strong>@ViewBag.Result</strong></h4>
+        </div>
+    }
+</div>
