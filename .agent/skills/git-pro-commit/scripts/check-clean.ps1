@@ -1,18 +1,18 @@
-# PowerShell Script: Kiểm tra độ sạch của Git trước khi commit
-# Vị trí: .agents/skills/git-pro-commit/scripts/check-clean.ps1
+# PowerShell Script: Kiem tra do sach cua Git truoc khi commit
+# Vi tri: .agents/skills/git-pro-commit/scripts/check-clean.ps1
 
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host "   🔍 KIỂM TRA ĐỘ SẠCH CỦA KHO GIT        " -ForegroundColor Cyan
+Write-Host "   [GIT CHECK] KIEM TRA DO SACH REPOSITORY " -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 
-# 1. Kiểm tra git đã init chưa
+# 1. Kiem tra git da khoi tao chua
 if (-not (Test-Path ".git")) {
-    Write-Host "⚠️ Thư mục hiện tại chưa được khởi tạo Git repository." -ForegroundColor Yellow
-    Write-Host "💡 Hãy chạy 'git init' nếu bạn muốn bắt đầu quản lý phiên bản." -ForegroundColor Gray
+    Write-Host "[CANH BAO] Thu muc hien tai chua duoc khoi tao Git repository." -ForegroundColor Yellow
+    Write-Host "[GOI Y] Hay chay 'git init' de bat dau quan ly phien ban." -ForegroundColor Gray
     exit 0
 }
 
-# 2. Kiểm tra các file rác có đang nằm trong git staging không
+# 2. Kiem tra cac file rac co dang nam trong git staging khong
 $stagedFiles = git diff --name-only --cached
 $junkPatterns = @("bin/", "obj/", ".vs/", ".zip", ".rar", ".7z")
 $hasJunk = $false
@@ -20,7 +20,7 @@ $hasJunk = $false
 foreach ($file in $stagedFiles) {
     foreach ($pattern in $junkPatterns) {
         if ($file -like "*$pattern*") {
-            Write-Host "❌ PHÁT HIỆN FILE RÁC ĐANG ĐƯỢC STAGE: $file" -ForegroundColor Red
+            Write-Host "[LOI] PHAT HIEN FILE RAC TRONG STAGING: $file" -ForegroundColor Red
             $hasJunk = $true
         }
     }
@@ -28,13 +28,13 @@ foreach ($file in $stagedFiles) {
 
 if ($hasJunk) {
     Write-Host ""
-    Write-Host "🛑 Vui lòng chạy lệnh sau để bỏ stage file rác:" -ForegroundColor Yellow
+    Write-Host "[HUONG DAN] Chay lenh sau de bo theo doi file rac:" -ForegroundColor Yellow
     Write-Host "   git rm -r --cached **/bin **/obj **/*.zip" -ForegroundColor White
 } else {
-    Write-Host "✅ Không phát hiện file rác trong Staged Area!" -ForegroundColor Green
+    Write-Host "[OK] Khong phat hien file rac trong Staged Area!" -ForegroundColor Green
 }
 
-# 3. Hiển thị tóm tắt trạng thái git
+# 3. Hien thi trang thai thay doi hien tai
 Write-Host ""
-Write-Host "📋 Trạng thái thay đổi hiện tại:" -ForegroundColor Cyan
+Write-Host "[TRANG THAI] Git status:" -ForegroundColor Cyan
 git status -s
