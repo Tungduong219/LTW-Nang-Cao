@@ -42,5 +42,36 @@ namespace MVC02.Controllers
 
             return View();
         }
+
+        // ==================== BÀI 2.2 ====================
+
+        [HttpGet]
+        public IActionResult GetRandomNumbers()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GetRandomNumbers(byte lb, byte ub, byte n)
+        {
+            if (lb >= ub || n <= 0)
+            {
+                ViewBag.Error = "lower bound phải nhỏ hơn upper bound và n > 0!";
+                return View();
+            }
+
+            Random rand = new Random();
+            List<int> numbers = new List<int>();
+            for (int i = 0; i < n; i++)
+            {
+                numbers.Add(rand.Next(lb, ub + 1));
+            }
+
+            ViewBag.Lb = lb;
+            ViewBag.Ub = ub;
+            ViewBag.N = n;
+
+            return View("ShowRandomNumber", numbers);
+        }
     }
 }

@@ -1,0 +1,24 @@
+@model List<int>
+@{
+    ViewData["Title"] = "Hiển thị số ngẫu nhiên";
+}
+
+<h2>Danh sách @ViewBag.N số ngẫu nhiên từ @ViewBag.Lb đến @ViewBag.Ub</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <ol style="margin-top: 15px; line-height: 1.8;">
+        @foreach (var num in Model)
+        {
+            <li><strong>@num</strong></li>
+        }
+    </ol>
+}
+else
+{
+    <p>Không có số ngẫu nhiên nào được tạo.</p>
+}
+
+<div style="margin-top: 20px;">
+    <a asp-action="GetRandomNumbers">Quay lại form tạo số</a>
+</div>

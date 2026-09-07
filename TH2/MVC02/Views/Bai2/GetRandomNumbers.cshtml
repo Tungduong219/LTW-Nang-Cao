@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Sinh số ngẫu nhiên (Bài 2.2)";
+}
+
+<h2>Bài 2.2: Sinh số ngẫu nhiên</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div style="color: red; margin-bottom: 15px;">
+        @ViewBag.Error
+    </div>
+}
+
+<form id="randomForm" method="post" asp-action="GetRandomNumbers" onsubmit="return validateRandomForm();">
+    <div style="margin-bottom: 15px;">
+        <label for="lb">Lower bound (lb):</label><br />
+        <input type="number" id="lb" name="lb" min="0" max="255" style="width: 200px; padding: 5px;" required />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="ub">Upper bound (ub):</label><br />
+        <input type="number" id="ub" name="ub" min="0" max="255" style="width: 200px; padding: 5px;" required />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="n">Số lượng (n):</label><br />
+        <input type="number" id="n" name="n" min="1" max="255" style="width: 200px; padding: 5px;" required />
+    </div>
+
+    <div id="randomErrorMessage" style="color: red; margin-bottom: 15px;"></div>
+
+    <button type="submit" style="padding: 6px 16px;">Sinh số ngẫu nhiên</button>
+</form>
+
+<script>
+    function validateRandomForm() {
+        const lb = parseInt(document.getElementById("lb").value);
+        const ub = parseInt(document.getElementById("ub").value);
+        const n = parseInt(document.getElementById("n").value);
+        const errorDiv = document.getElementById("randomErrorMessage");
+
+        errorDiv.innerText = "";
+
+        // Kiểm tra lower bound < upper bound
+        if (isNaN(lb) || isNaN(ub) || lb >= ub) {
+            errorDiv.innerText = "Lower bound (lb) phải nhỏ hơn Upper bound (ub)!";
+            return false;
+        }
+
+        // Kiểm tra n > 0
+        if (isNaN(n) || n <= 0) {
+            errorDiv.innerText = "Số lượng (n) phải lớn hơn 0!";
+            return false;
+        }
+
+        return true;
+    }
+</script>
