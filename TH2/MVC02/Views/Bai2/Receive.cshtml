@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Kết quả đăng ký";
+}
+
+<h2>Kết quả đăng ký</h2>
+
+<p style="font-size: 18px; color: @(ViewBag.Success == true ? "green" : "red");">
+    @ViewBag.Message
+</p>
+
+<div>
+    <a asp-action="Register">Quay lại trang Đăng ký</a>
+</div>

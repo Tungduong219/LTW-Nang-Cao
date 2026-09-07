@@ -1,0 +1,64 @@
+@{
+    ViewData["Title"] = "Đăng ký tài khoản (Bài 2.1)";
+}
+
+<h2>Bài 2.1: Đăng ký tài khoản</h2>
+
+<form id="registerForm" method="post" asp-action="Receive" onsubmit="return validateForm();">
+    <div style="margin-bottom: 15px;">
+        <label for="username">Username:</label><br />
+        <input type="text" id="username" name="username" style="width: 300px; padding: 5px;" />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="password">Password:</label><br />
+        <input type="password" id="password" name="password" style="width: 300px; padding: 5px;" />
+        <small style="color: gray; display: block;">(Ít nhất 8 ký tự và chứa ít nhất 1 chữ số)</small>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="email">Email:</label><br />
+        <input type="text" id="email" name="email" style="width: 300px; padding: 5px;" />
+    </div>
+
+    <div id="errorMessage" style="color: red; margin-bottom: 15px;"></div>
+
+    <button type="submit" style="padding: 6px 16px;">Đăng ký</button>
+</form>
+
+<script>
+    function validateForm() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+        const email = document.getElementById("email").value.trim();
+        const errorDiv = document.getElementById("errorMessage");
+
+        errorDiv.innerText = "";
+
+        // (1) Kiểm tra username không rỗng
+        if (username === "") {
+            errorDiv.innerText = "Vui lòng nhập username!";
+            document.getElementById("username").focus();
+            return false;
+        }
+
+        // (2) Kiểm tra password: từ 8 ký tự, chứa ít nhất 1 chữ số
+        const hasNumber = /\d/;
+        if (password.length < 8 || !hasNumber.test(password)) {
+            errorDiv.innerText = "Password phải có từ 8 ký tự trở lên và chứa ít nhất 1 chữ số!";
+            document.getElementById("password").focus();
+            return false;
+        }
+
+        // (3) Kiểm tra email đúng định dạng
+        const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        if (!emailRegex.test(email)) {
+            errorDiv.innerText = "Email không đúng định dạng!";
+            document.getElementById("email").focus();
+            return false;
+        }
+
+        // Hợp lệ, cho phép submit đến action Receive
+        return true;
+    }
+</script>
