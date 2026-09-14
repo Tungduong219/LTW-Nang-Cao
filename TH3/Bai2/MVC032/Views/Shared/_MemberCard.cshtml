@@ -1,0 +1,35 @@
+@model MVC032.Models.Member
+
+<div class="card h-100 shadow-sm border-1 text-center p-3">
+    <!-- 1. Ảnh đại diện Avatar -->
+    <div class="d-flex justify-content-center mb-3">
+        <img src="@Model.AvatarURL" 
+             alt="@Model.FullName" 
+             class="rounded-circle shadow-sm border border-2 border-primary" 
+             style="width: 100px; height: 100px; object-fit: cover;" 
+             loading="lazy" />
+    </div>
+
+    <!-- 2. Thông tin thành viên -->
+    <div class="card-body d-flex flex-column p-0">
+        <h5 class="card-title fw-bold text-dark mb-1">@Model.FullName</h5>
+        <span class="badge bg-light text-secondary border mb-2 align-self-center">ID: #@Model.MemberID</span>
+
+        <p class="card-text text-muted small mb-1">
+            <strong>SĐT:</strong> @Model.Phone
+        </p>
+        <p class="card-text text-muted small text-truncate mb-3" title="@Model.Email">
+            <strong>Email:</strong> @Model.Email
+        </p>
+
+        <!-- 3. Nút liên kết Xem chi tiết thông qua Routing -->
+        <div class="mt-auto">
+            <a asp-controller="Member" 
+               asp-action="MemberDetail" 
+               asp-route-id="@Model.MemberID" 
+               class="btn btn-primary btn-sm w-100 fw-semibold">
+                Xem chi tiết &rarr;
+            </a>
+        </div>
+    </div>
+</div>

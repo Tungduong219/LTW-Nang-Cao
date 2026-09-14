@@ -1,0 +1,46 @@
+@model MVC032.Models.Member
+
+@{
+    ViewData["Title"] = "Chi Tiết Thành Viên - " + Model.FullName;
+}
+
+<div class="container my-5">
+    <div class="mb-3">
+        <a asp-controller="Member" asp-action="MemberList" class="btn btn-outline-secondary">
+            &larr; Quay lại danh sách thành viên
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-1 mx-auto" style="max-width: 650px;">
+        <div class="card-header bg-primary text-white py-3 text-center">
+            <h4 class="mb-0 fw-bold">Thông Tin Chi Tiết Thành Viên</h4>
+        </div>
+        <div class="card-body p-4 text-center">
+            <!-- Avatar lớn -->
+            <img src="@Model.AvatarURL" 
+                 alt="@Model.FullName" 
+                 class="rounded-circle shadow border border-3 border-primary mb-3" 
+                 style="width: 150px; height: 150px; object-fit: cover;" />
+
+            <h3 class="fw-bold text-dark mb-1">@Model.FullName</h3>
+            <span class="badge bg-secondary mb-4 px-3 py-2 fs-6">Mã thành viên: #@Model.MemberID</span>
+
+            <div class="border rounded p-3 text-start bg-light mb-4">
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted fw-semibold">Số điện thoại:</div>
+                    <div class="col-sm-8 text-dark fw-bold">@Model.Phone</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-muted fw-semibold">Địa chỉ Email:</div>
+                    <div class="col-sm-8 text-primary fw-bold">@Model.Email</div>
+                </div>
+            </div>
+
+            <div>
+                <a asp-controller="Member" asp-action="MemberList" class="btn btn-primary px-4">
+                    Hoàn tất xem chi tiết
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

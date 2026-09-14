@@ -1,0 +1,30 @@
+@model IEnumerable<MVC032.Models.Member>
+
+@{
+    ViewData["Title"] = "Danh Sách Thành Viên";
+}
+
+<div class="container my-4">
+    <!-- Tiêu đề trang -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Danh Sách Thành Viên (MemberList)</h2>
+        <p class="text-muted">
+            Buổi 3 - Bài 3.2: Sử dụng Partial View và Responsive (Desktop: 4 cột | Mobile: 2 cột)
+        </p>
+    </div>
+
+    <!-- 
+        Lưới Responsive theo yêu cầu đề bài:
+        - Trên Mobile: row-cols-2 (hiển thị 2 thành viên trên 1 hàng ngang)
+        - Trên Desktop: row-cols-lg-4 (hiển thị 4 thành viên trên 1 hàng ngang)
+    -->
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var member in Model)
+        {
+            <div class="col">
+                <!-- Nhúng Partial View _MemberCard theo yêu cầu mục 2 & 3 -->
+                <partial name="_MemberCard" model="member" />
+            </div>
+        }
+    </div>
+</div>
