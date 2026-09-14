@@ -1,0 +1,178 @@
+@model IEnumerable<MVC031.Models.Product>
+
+@{
+    ViewData["Title"] = "Danh Sách Sản Phẩm";
+}
+
+<style>
+    /* Khung bao bọc mô phỏng chuẩn xác phác thảo Hình 1 */
+    .wireframe-container {
+        background-color: #f3f3f3;
+        border: 2px solid #333333;
+        border-radius: 6px;
+        padding: 24px;
+        margin-top: 15px;
+        margin-bottom: 30px;
+    }
+
+    .wireframe-title {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111111;
+        margin-bottom: 24px;
+    }
+
+    /* Thẻ sản phẩm theo phong cách Hình 1 */
+    .product-card {
+        background-color: #cfcfcf;
+        border: 1.5px solid #444444;
+        border-radius: 4px;
+        padding: 14px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Vị trí Giá (Price) ở góc trên bên phải */
+    .product-price-tag {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111111;
+        text-align: right;
+        margin-bottom: 8px;
+    }
+
+    /* Khung ảnh trung tâm */
+    .product-img-box {
+        background-color: #ffffff;
+        border: 1.5px solid #444444;
+        width: 100%;
+        height: 190px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: 12px;
+    }
+
+    .product-img-box img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-img-box img {
+        transform: scale(1.05);
+    }
+
+    /* Tên sản phẩm căn lề trái */
+    .product-title-link {
+        color: #111111;
+        font-size: 1.15rem;
+        font-weight: 700;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .product-title-link:hover {
+        color: #0d6efd;
+        text-decoration: underline;
+    }
+
+    /* Mô tả ngắn */
+    .product-desc {
+        color: #333333;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 14px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Nút Add To Cart ở góc dưới bên trái */
+    .btn-add-to-cart {
+        background-color: #e0e0e0;
+        color: #111111;
+        border: 1.5px solid #333333;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 3px;
+        font-size: 0.9rem;
+        align-self: flex-start;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-add-to-cart:hover {
+        background-color: #333333;
+        color: #ffffff;
+    }
+</style>
+
+@if (TempData["CartMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>@TempData["CartMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="wireframe-container">
+    <!-- Tiêu đề Products ở góc trên bên trái đúng như Hình 1 -->
+    <div class="wireframe-title">Products</div>
+
+    <!-- Lưới 3 cột trên một hàng đúng tỷ lệ phác thảo -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="product-card">
+                    <div>
+                        <!-- 1. Giá (Price) ở góc trên bên phải -->
+                        <div class="product-price-tag">
+                            @item.ProductPrice.ToString("N0") VNĐ
+                        </div>
+
+                        <!-- 2. Khung ảnh đại diện (Image) - Click vào ảnh cũng mở trang chi tiết -->
+                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@item.ProductID">
+                            <div class="product-img-box">
+                                <img src="@item.ImageURL" alt="@item.ProductName" loading="lazy" />
+                            </div>
+                        </a>
+
+                        <!-- 3. Tên sản phẩm (Product Name) - Có link chuyển sang View ProductDetail -->
+                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@item.ProductID" class="product-title-link">
+                            @item.ProductName
+                        </a>
+
+                        <!-- 4. Mô tả ngắn (Brief description) -->
+                        <div class="product-desc" title="@item.Description">
+                            @item.Description
+                        </div>
+                    </div>
+
+                    <!-- 5. Nút Add To Cart ở góc dưới bên trái -->
+                    <form asp-controller="Product" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="productId" value="@item.ProductID" />
+                        <button type="submit" class="btn-add-to-cart">
+                            Add To Cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
