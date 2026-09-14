@@ -1,0 +1,49 @@
+@model MVC031.Models.Product
+
+@{
+    ViewData["Title"] = "Chi Tiết: " + Model.ProductName;
+}
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Product" asp-action="ProductList">Danh sách sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.ProductName</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm border-0">
+        <div class="row g-0">
+            <div class="col-md-5">
+                <img src="@Model.ImageURL" class="img-fluid rounded-start w-100 h-100" alt="@Model.ProductName" style="object-fit: cover; min-height: 350px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=No+Image';">
+            </div>
+            <div class="col-md-7">
+                <div class="card-body p-4 d-flex flex-column h-100">
+                    <div class="mb-2">
+                        <span class="badge bg-primary fs-6">Mã mặt hàng: #@Model.ProductID</span>
+                    </div>
+                    <h2 class="card-title fw-bold text-dark mb-3">@Model.ProductName</h2>
+                    
+                    <div class="p-3 bg-light rounded mb-4">
+                        <span class="text-muted small d-block">Đơn giá niêm yết:</span>
+                        <span class="text-danger fw-bold fs-3">@Model.ProductPrice.ToString("N0") VNĐ</span>
+                    </div>
+
+                    <h5 class="fw-bold mb-2">Thông tin mô tả:</h5>
+                    <p class="card-text text-secondary mb-4 leading-relaxed">
+                        @Model.Description
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex gap-2">
+                        <a asp-controller="Product" asp-action="ProductList" class="btn btn-secondary">
+                            &larr; Quay lại danh sách
+                        </a>
+                        <button type="button" class="btn btn-success" onclick="alert('Đã thêm sản phẩm: @Model.ProductName vào giỏ hàng!');">
+                            🛒 Mua ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
