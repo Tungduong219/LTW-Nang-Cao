@@ -1,0 +1,103 @@
+@model IEnumerable<MVC04.Models.Product>
+
+@{
+    ViewData["Title"] = "Quản lý hàng hóa";
+    int stt = 1;
+}
+
+<style>
+    .dashed-box {
+        border: 2px dashed #555555;
+        border-radius: 4px;
+        padding: 24px;
+        background-color: #ffffff;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .table-custom th {
+        background-color: #f8f9fa;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: 700;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table-custom td {
+        vertical-align: middle;
+    }
+
+    .delete-link {
+        color: #dc3545;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .delete-link:hover {
+        color: #a71d2a;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="dashed-box">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0 text-dark">Quản lý hàng hóa</h5>
+            <a asp-controller="Product" asp-action="NewProduct" class="btn btn-sm btn-primary">
+                + Thêm mới hàng hóa
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-custom mb-0">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">STT</th>
+                        <th style="width: 25%;">Tên hàng</th>
+                        <th style="width: 20%;">Đơn giá</th>
+                        <th style="width: 35%;">Mô tả</th>
+                        <th style="width: 12%;">Xử lý</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@(stt++)</td>
+                                <td class="text-center">@item.ProductName</td>
+                                <td class="text-center">@item.ProductPrice.ToString("N0") VND</td>
+                                <td class="text-center">@item.Description</td>
+                                <td class="text-center">
+                                    <a asp-action="Delete" 
+                                       asp-route-id="@item.ProductID" 
+                                       class="delete-link" 
+                                       onclick="return confirm('Bạn có chắc muốn xóa bản ghi này?');">
+                                        🗑 Xóa
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-3">
+                                Chưa có dữ liệu mặt hàng nào trong cơ sở dữ liệu.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
